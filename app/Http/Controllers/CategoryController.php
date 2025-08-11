@@ -29,6 +29,7 @@ class CategoryController extends Controller
             'meta_data' => 'nullable|json',
         ]);
 
+        
         $category = Category::create($validated);
 
         return new CategoryResource($category);
