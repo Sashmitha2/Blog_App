@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('comments', CommentController::class);
@@ -14,7 +15,16 @@ Route::apiResource('posts', PostController::class);
 Route::apiResource('tags', TagController::class);
 Route::apiResource('users', UserController::class)->only(['index','show']);
 
+Route::middleware('auth:sanctum')->group(function() {
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('comments', CommentController::class);
+    Route::apiResource('posts', PostController::class);
+    Route::apiResource('tags', TagController::class);
+    Route::apiResource('users', UserController::class)->only(['index','show']);
+});
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
 ?>
